@@ -1,0 +1,21 @@
+{
+    "git.ignoreLimitWarning": true,
+    "python.pythonPath": "C:\\Python38\\python.exe",
+	"team.showWelcomeMessage": false,
+	"editor.formatOnSave": true,
+	"python.linting.pep8Enabled": true,
+	"python.linting.pylintPath": "pylint",
+	"python.linting.pylintArgs": [
+		"--load-plugins",
+		"pylint_django",
+		"--errors-only"
+	],
+	"python.linting.pylintEnabled": true,
+	"python.linting.enabled": true,
+	"python.venvPath":"C:\\Users\\maalo\\Desktop\\IT420\\venv\\Scripts\\python.exe",
+	"python.formatting.provider": "black",
+	"python.enableFormatting.black": true,
+
+}
+
+
