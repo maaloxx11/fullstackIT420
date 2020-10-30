@@ -8,8 +8,10 @@ class RoomSerializer(serializers.ModelSerializer):
         fields = (
             "room_id",
             "room_type",
-            "electric_meter",
-            "water_meter",
+            "electric_meter_old",
+            "water_meter_old",
+            "electric_meter_new",
+            "water_meter_new",
             "room_status",
         )
 

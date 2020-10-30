@@ -4,8 +4,8 @@ from django.db import models
 class Room(models.Model):
     room_id = models.IntegerField(primary_key=True)
     room_type = models.IntegerField()
-    electric_meter_old = models.IntegerField(blank=True)
-    water_meter_old = models.IntegerField(blank=True)
+    electric_meter_old = models.IntegerField(blank=True,null=True)
+    water_meter_old = models.IntegerField(blank=True,null=True)
     electric_meter_new = models.IntegerField(default=0)
     water_meter_new = models.IntegerField(default=0)
     room_status = models.IntegerField()
