@@ -4,8 +4,10 @@ from django.db import models
 class Room(models.Model):
     room_id = models.IntegerField(primary_key=True)
     room_type = models.IntegerField()
-    electric_meter = models.IntegerField()
-    water_meter = models.IntegerField()
+    electric_meter_old = models.IntegerField(blank=True)
+    water_meter_old = models.IntegerField(blank=True)
+    electric_meter_new = models.IntegerField(default=0)
+    water_meter_new = models.IntegerField(default=0)
     room_status = models.IntegerField()
 
 
@@ -34,6 +36,7 @@ class ServiceCharge(models.Model):
     add_date = models.DateField(auto_now=False, auto_now_add=False)
     deadline_date = models.DateField(auto_now=False, auto_now_add=False)
     total = models.FloatField(default=0)
+
 
 class Payment(models.Model):
     sc_id = models.ForeignKey(ServiceCharge, on_delete=models.CASCADE)
