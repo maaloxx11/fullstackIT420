@@ -2,21 +2,23 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Room, Renter, Price, Transition, ServiceCharge
+from .models import Room, Renter, Price, Transition, ServiceCharge, Payment, Problem
 from .serializers import (
     RoomSerializer,
     RenterSerializer,
     PriceSerializer,
     TransitionSerializer,
     ServiceChargeSerializer,
+    PaymentSerializer,
+    ProblemSerializer,
 )
 
 
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    
-    @action(detail=True, methods=["POST"])
+
+    """ @action(detail=True, methods=["POST"])
     def addservicecharge(self, request, pk=None):
         room = Room.objects.get(room_id=pk)
         ele = room.electric_meter
@@ -27,6 +29,7 @@ class RoomViewSet(viewsets.ModelViewSet):
         response = {ele+water}
         serializer = ServiceChargeSerializer(total,many= False )
         return Response(response, status=status.HTTP_200_OK)
+ """
 
 
 class RenterViewSet(viewsets.ModelViewSet):
@@ -47,3 +50,13 @@ class TransitionViewSet(viewsets.ModelViewSet):
 class ServiceChargeViewSet(viewsets.ModelViewSet):
     queryset = ServiceCharge.objects.all()
     serializer_class = ServiceChargeSerializer
+
+
+class PaymentViewSet(viewsets.ModelViewSet):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+
+
+class ProblemViewSet(viewsets.ModelViewSet):
+    queryset = Problem.objects.all()
+    serializer_class = ProblemSerializer

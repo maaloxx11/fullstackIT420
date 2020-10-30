@@ -8,6 +8,8 @@ from .views import (
     PriceViewSet,
     TransitionViewSet,
     ServiceChargeViewSet,
+    PaymentViewSet,
+    ProblemViewSet,
 )
 
 router = routers.DefaultRouter()
@@ -16,6 +18,8 @@ router.register("renter", RenterViewSet)
 router.register("price", PriceViewSet)
 router.register("transition", TransitionViewSet)
 router.register("servicecharge", ServiceChargeViewSet)
+router.register("payment", PaymentViewSet)
+router.register("problem", ProblemViewSet)
 urlpatterns = [
     path("", include(router.urls)),
 ]
