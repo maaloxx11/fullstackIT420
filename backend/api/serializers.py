@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Room, Renter, Price, Transition
+from .models import Room, Renter, Price, Transition, ServiceCharge
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -46,4 +46,16 @@ class TransitionSerializer(serializers.ModelSerializer):
             "move_in_date",
             "move_out_date",
             "telephone",
+        )
+
+
+class ServiceChargeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceCharge
+        fields = (
+            "id",
+            "room_id",
+            "add_date",
+            "deadline_date",
+            "total",
         )

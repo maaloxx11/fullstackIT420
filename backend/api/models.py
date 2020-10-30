@@ -27,3 +27,10 @@ class Transition(models.Model):
     renter_id = models.ForeignKey(Renter, on_delete=models.CASCADE)
     move_in_date = models.DateField(auto_now=False, auto_now_add=False)
     move_out_date = models.DateField(auto_now=False, auto_now_add=False, blank=True)
+
+
+class ServiceCharge(models.Model):
+    room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
+    add_date = models.DateField(auto_now=False, auto_now_add=False)
+    deadline_date = models.DateField(auto_now=False, auto_now_add=False)
+    total = models.FloatField(blank=True,null=True, default=0)
