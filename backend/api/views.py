@@ -22,7 +22,8 @@ from .serializers import (
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_fields = ['room_type','room_status']
     """ @action(detail=True, methods=["POST"])
     def addservicecharge(self, request, pk=None):
         room = Room.objects.get(room_id=pk)
@@ -36,17 +37,7 @@ class RoomViewSet(viewsets.ModelViewSet):
         return Response(response, status=status.HTTP_200_OK)
  """
 
-    @action(detail=True, methods=["GET"])
-    def pri(self, request, pk=None):
-        room = Room.objects.get(room_id=pk)
-        ele = room.electric_meter
-        water = room.water_meter
-        total = ServiceCharge.objects.get(room_id=room.room_id)
-        total.total = ele + water
-        total.save()
-        response = {ele + water}
-        serializer = ServiceChargeSerializer(total, many=False)
-        return Response(response, status=status.HTTP_200_OK)
+
 
 
 class RenterViewSet(viewsets.ModelViewSet):
