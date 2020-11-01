@@ -20,7 +20,8 @@ class Renter(models.Model):
 
 
 class Price(models.Model):
-    price_description = models.CharField(max_length=20)
+    price_id = models.CharField(primary_key=True,max_length=20,default=0)
+    price_description = models.CharField(max_length=30)
     price_num = models.IntegerField()
 
 

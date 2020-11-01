@@ -32,7 +32,7 @@ class PriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Price
         fields = (
-            "id",
+            "price_id",
             "price_description",
             "price_num",
         )
@@ -47,7 +47,6 @@ class TransitionSerializer(serializers.ModelSerializer):
             "renter_id",
             "move_in_date",
             "move_out_date",
-            "telephone",
         )
 
 
