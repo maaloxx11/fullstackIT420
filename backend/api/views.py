@@ -15,13 +15,18 @@ from .serializers import (
     ProblemSerializer,
 )
 
+
 class TransitionFilter(filters.FilterSet):
-    room_id = django_filters.NumberFilter(field_name='room_id')
-    renter_id = django_filters.NumberFilter(field_name='room_id')
-    move_out_date = filters.BooleanFilter(field_name='move_out_date',lookup_expr='isnull')
+    room_id = django_filters.NumberFilter(field_name="room_id")
+    renter_id = django_filters.NumberFilter(field_name="renter_id")
+    move_out_date = filters.BooleanFilter(
+        field_name="move_out_date", lookup_expr="isnull"
+    )
+
     class Meta:
         model = Transition
         fields = []
+
 
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
@@ -68,13 +73,12 @@ class TransitionViewSet(viewsets.ModelViewSet):
     serializer_class = TransitionSerializer
     filterset_class = TransitionFilter
 
-   
-
 
 class ServiceChargeViewSet(viewsets.ModelViewSet):
     queryset = ServiceCharge.objects.all()
     serializer_class = ServiceChargeSerializer
-
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_fields = ["room_id", "payment_status"]
 
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
