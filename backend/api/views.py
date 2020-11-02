@@ -15,7 +15,7 @@ from .serializers import (
     ProblemSerializer,
 )
 
-class WidgetFilter(filters.FilterSet):
+class TransitionFilter(filters.FilterSet):
     room_id = django_filters.NumberFilter(field_name='room_id')
     renter_id = django_filters.NumberFilter(field_name='room_id')
     move_out_date = filters.BooleanFilter(field_name='move_out_date',lookup_expr='isnull')
@@ -66,7 +66,7 @@ class PriceViewSet(viewsets.ModelViewSet):
 class TransitionViewSet(viewsets.ModelViewSet):
     queryset = Transition.objects.all()
     serializer_class = TransitionSerializer
-    filterset_class = WidgetFilter
+    filterset_class = TransitionFilter
 
    
 
