@@ -1,4 +1,5 @@
 from django.db import models
+import datetime    
 
 
 class Room(models.Model):
@@ -33,9 +34,10 @@ class Transition(models.Model):
 
 class ServiceCharge(models.Model):
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
-    add_date = models.DateField(auto_now=False, auto_now_add=False)
-    deadline_date = models.DateField(auto_now=False, auto_now_add=False)
+    add_date = models.DateField(default=datetime.date.today, blank=True)
+    deadline_date = models.DateField(auto_now=False, auto_now_add=False,blank=True,null=True)
     total = models.FloatField(default=0)
+    payment_status = models.IntegerField(default=1)
 
 
 class Payment(models.Model):

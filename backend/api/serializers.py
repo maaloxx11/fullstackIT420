@@ -59,6 +59,7 @@ class ServiceChargeSerializer(serializers.ModelSerializer):
             "add_date",
             "deadline_date",
             "total",
+            "payment_status"
         )
 
 
