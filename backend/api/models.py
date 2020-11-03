@@ -9,7 +9,7 @@ class Room(models.Model):
     water_meter_old = models.IntegerField(blank=True,null=True)
     electric_meter_new = models.IntegerField(default=0)
     water_meter_new = models.IntegerField(default=0)
-    room_status = models.IntegerField()
+    room_status = models.IntegerField(default=1)
 
 
 class Renter(models.Model):

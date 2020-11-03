@@ -37,8 +37,10 @@ class RoomViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["POST"])
     def addservicecharge(self, request, pk=None):
         room = Room.objects.get(room_id=pk)
-        ele = room.electric_meter_new
-        water = room.water_meter_new
+        ele_new = room.electric_meter_old
+        ele_old = room.electric_meter_new
+        water_new = room.water_meter_new
+        water_old = room.water_meter_old
         total = ServiceCharge.objects.get(room_id=room.room_id)
         rates = Price.objects.all()
         for rate in rates:
@@ -47,6 +49,18 @@ class RoomViewSet(viewsets.ModelViewSet):
             rate_room = rate.price_num
         ele_rate = Price.objects.get(price_id="electric_rate")
         water_rate = Price.objects.get(price_id="water_rate")
+
+        ele = 0
+        water = 0
+        if ele_new < ele_old:
+            ele = (9999-ele_old)+ele_new
+        else :
+            ele = ele_new - ele_old
+        if water_new < water_old:
+            water = (9999-water_old)+water_new
+        else :
+            water = ele_new - ele_old 
+          
         total.total = rate_room + (
             (ele_rate.price_num * ele) + (water_rate.price_num * water)
         )
