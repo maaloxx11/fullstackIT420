@@ -59,7 +59,9 @@ class ServiceChargeSerializer(serializers.ModelSerializer):
             "add_date",
             "deadline_date",
             "total",
-            "payment_status"
+            "payment_status",
+            "price_electric_meter",
+            "price_water_meter"
         )
 
 

@@ -37,6 +37,8 @@ class ServiceCharge(models.Model):
     add_date = models.DateField(default=datetime.date.today, blank=True)
     deadline_date = models.DateField(auto_now=False, auto_now_add=False,blank=True,null=True)
     total = models.FloatField(default=0)
+    price_electric_meter = models.IntegerField(blank=True,null=True)
+    price_water_meter = models.IntegerField( blank=True,null=True)
     payment_status = models.IntegerField(default=1)
 
 
