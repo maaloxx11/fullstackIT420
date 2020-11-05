@@ -4,6 +4,7 @@ from rest_framework import viewsets, status
 from django_filters import rest_framework as filters
 from rest_framework.decorators import action
 import datetime
+
 from rest_framework import generics
 from rest_framework.response import Response
 from .models import Room, Renter, Price, Transition, ServiceCharge, Payment, Problem
@@ -27,6 +28,15 @@ class TransitionFilter(filters.FilterSet):
 
     class Meta:
         model = Transition
+        fields = []
+
+
+class PaymentFilter(filters.FilterSet):
+    start_date = filters.DateFilter(field_name="payment_date", lookup_expr="gte")
+    end_date = filters.DateFilter(field_name="payment_date", lookup_expr="lte")
+
+    class Meta:
+        model = Payment
         fields = []
 
 
@@ -54,7 +64,6 @@ class RoomFilter(filters.FilterSet):
         fields = []
 
 
-
 class RoomViewSet(viewsets.ModelViewSet):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
@@ -69,7 +78,7 @@ class RoomViewSet(viewsets.ModelViewSet):
         water_new = room.water_meter_new
         water_old = room.water_meter_old
         room_type = room.room_type
-        total = ServiceCharge.objects.get(room_id=room.room_id)
+        total = ServiceCharge.objects.get(room_id=room.room_id, payment_status=1)
         rates = Price.objects.all()
         rate_room = 0
         for rate in rates:
@@ -137,10 +146,10 @@ class ServiceChargeViewSet(viewsets.ModelViewSet):
         return Response(response, status=status.HTTP_200_OK)
 
 
-
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
+    filterset_class = PaymentFilter
 
 
 class ProblemViewSet(viewsets.ModelViewSet):
@@ -148,7 +157,3 @@ class ProblemViewSet(viewsets.ModelViewSet):
     serializer_class = ProblemSerializer
 
 
-def pri(request, price_num):
-    queryset = Price.objects.filter(price_num=price_num)
-    serializer_class = PriceSerializer
-    return render(serializer_class.data)

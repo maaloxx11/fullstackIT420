@@ -1,6 +1,7 @@
 from django.db import models
 import datetime    
-
+from django.db.models.functions import TruncMonth
+from django.db.models import Count,Func
 
 class Room(models.Model):
     room_id = models.IntegerField(primary_key=True)
@@ -52,3 +53,5 @@ class Problem(models.Model):
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
     promblem_description = models.TextField(max_length=100)
     problem_date = models.DateField(auto_now=False, auto_now_add=False)
+
+
