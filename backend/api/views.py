@@ -22,6 +22,8 @@ from .serializers import (
 class TransitionFilter(filters.FilterSet):
     room_id = django_filters.NumberFilter(field_name="room_id")
     renter_id = django_filters.NumberFilter(field_name="renter_id")
+    start_date = filters.DateFilter(field_name="move_in_date", lookup_expr="gte")
+    end_date = filters.DateFilter(field_name="move_in_date", lookup_expr="lte")
     move_out_date = filters.BooleanFilter(
         field_name="move_out_date", lookup_expr="isnull"
     )
