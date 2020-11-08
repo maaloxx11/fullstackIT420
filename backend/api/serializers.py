@@ -61,7 +61,8 @@ class ServiceChargeSerializer(serializers.ModelSerializer):
             "total",
             "payment_status",
             "price_electric_meter",
-            "price_water_meter"
+            "price_water_meter",
+            "status",
         )
 
 

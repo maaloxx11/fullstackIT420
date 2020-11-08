@@ -41,6 +41,7 @@ class ServiceCharge(models.Model):
     price_electric_meter = models.IntegerField(blank=True,null=True)
     price_water_meter = models.IntegerField( blank=True,null=True)
     payment_status = models.IntegerField(default=1)
+    status = models.IntegerField(default=1)
 
 
 class Payment(models.Model):

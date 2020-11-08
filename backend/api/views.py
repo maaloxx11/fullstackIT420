@@ -112,6 +112,14 @@ class RoomViewSet(viewsets.ModelViewSet):
         response = {total.total}
         serializer = ServiceChargeSerializer(total)
         return Response(response, status=status.HTTP_200_OK)
+    @action(detail=True, methods=["POST"])
+    def updateservicestatus(self, request, pk=None):
+        sv = ServiceCharge.objects.get(room_id=pk)
+        sv.status = 0
+        sv.save()
+        response = {sv.status}
+        serializer = ServiceChargeSerializer(sv)
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class RenterViewSet(viewsets.ModelViewSet):
@@ -136,7 +144,7 @@ class ServiceChargeViewSet(viewsets.ModelViewSet):
     queryset = ServiceCharge.objects.all()
     serializer_class = ServiceChargeSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ["room_id", "payment_status"]
+    filter_fields = ["room_id", "payment_status","status"]
 
     @action(detail=True, methods=["POST"])
     def updatepaymentstatus(self, request, pk=None):
