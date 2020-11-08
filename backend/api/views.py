@@ -112,6 +112,7 @@ class RoomViewSet(viewsets.ModelViewSet):
         response = {total.total}
         serializer = ServiceChargeSerializer(total)
         return Response(response, status=status.HTTP_200_OK)
+
     @action(detail=True, methods=["POST"])
     def updateservicestatus(self, request, pk=None):
         sv = ServiceCharge.objects.get(room_id=pk)
@@ -120,7 +121,31 @@ class RoomViewSet(viewsets.ModelViewSet):
         response = {sv.status}
         serializer = ServiceChargeSerializer(sv)
         return Response(response, status=status.HTTP_200_OK)
+    
+    @action(detail=True, methods=["POST"])
+    def updatetoatal(self, request, pk=None):
+        room = Room.objects.get(room_id=pk)
+        total = ServiceCharge.objects.get(room_id=room.room_id, payment_status=1)
+        rates = Price.objects.all()
+        rate_room = 0
+        for rate in rates:
+            if rate.price_id == str(room.room_type):
+                rate_room = rate.price_num
+                break
+        total.total = rate_room*2
+        total.save()
+        response = {total.total}
+        serializer = ServiceChargeSerializer(total)
+        return Response(response, status=status.HTTP_200_OK)
 
+    @action(detail=True, methods=["POST"])
+    def updateroomstatus(self, request, pk=None):
+        room = Room.objects.get(room_id=pk)
+        room.room_status = 0
+        room.save()
+        response = {room.room_status}
+        serializer = ServiceChargeSerializer(room)
+        return Response(response, status=status.HTTP_200_OK)
 
 class RenterViewSet(viewsets.ModelViewSet):
     queryset = Renter.objects.all()
