@@ -1,10 +1,11 @@
 from django.shortcuts import render
 import django_filters.rest_framework
+from django.contrib.auth.models import User
 from rest_framework import viewsets, status
 from django_filters import rest_framework as filters
 from rest_framework.decorators import action
+from rest_framework.authentication import TokenAuthentication
 import datetime
-
 from rest_framework import generics
 from rest_framework.response import Response
 from .models import Room, Renter, Price, Transition, ServiceCharge, Payment, Problem
@@ -71,6 +72,7 @@ class RoomViewSet(viewsets.ModelViewSet):
     serializer_class = RoomSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_class = RoomFilter
+    authentication_classes = (TokenAuthentication,)
 
     @action(detail=True, methods=["POST"])
     def addservicecharge(self, request, pk=None):
@@ -121,7 +123,7 @@ class RoomViewSet(viewsets.ModelViewSet):
         response = {sv.status}
         serializer = ServiceChargeSerializer(sv)
         return Response(response, status=status.HTTP_200_OK)
-    
+
     @action(detail=True, methods=["POST"])
     def updatetoatal(self, request, pk=None):
         room = Room.objects.get(room_id=pk)
@@ -132,7 +134,7 @@ class RoomViewSet(viewsets.ModelViewSet):
             if rate.price_id == str(room.room_type):
                 rate_room = rate.price_num
                 break
-        total.total = rate_room*2
+        total.total = rate_room * 2
         total.save()
         response = {total.total}
         serializer = ServiceChargeSerializer(total)
@@ -147,9 +149,11 @@ class RoomViewSet(viewsets.ModelViewSet):
         serializer = ServiceChargeSerializer(room)
         return Response(response, status=status.HTTP_200_OK)
 
+
 class RenterViewSet(viewsets.ModelViewSet):
     queryset = Renter.objects.all()
     serializer_class = RenterSerializer
+    authentication_classes = (TokenAuthentication,)
 
 
 class PriceViewSet(viewsets.ModelViewSet):
@@ -157,19 +161,22 @@ class PriceViewSet(viewsets.ModelViewSet):
     serializer_class = PriceSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filter_fields = ["price_num", "price_id"]
+    authentication_classes = (TokenAuthentication,)
 
 
 class TransitionViewSet(viewsets.ModelViewSet):
     queryset = Transition.objects.all()
     serializer_class = TransitionSerializer
     filterset_class = TransitionFilter
+    authentication_classes = (TokenAuthentication,)
 
 
 class ServiceChargeViewSet(viewsets.ModelViewSet):
     queryset = ServiceCharge.objects.all()
     serializer_class = ServiceChargeSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filter_fields = ["room_id", "payment_status","status"]
+    filter_fields = ["room_id", "payment_status", "status"]
+    authentication_classes = (TokenAuthentication,)
 
     @action(detail=True, methods=["POST"])
     def updatepaymentstatus(self, request, pk=None):
@@ -185,10 +192,10 @@ class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
     filterset_class = PaymentFilter
+    authentication_classes = (TokenAuthentication,)
 
 
 class ProblemViewSet(viewsets.ModelViewSet):
     queryset = Problem.objects.all()
     serializer_class = ProblemSerializer
-
-
+    authentication_classes = (TokenAuthentication,)

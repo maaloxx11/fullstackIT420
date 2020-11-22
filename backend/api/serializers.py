@@ -19,13 +19,7 @@ class RoomSerializer(serializers.ModelSerializer):
 class RenterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Renter
-        fields = (
-            "renter_id",
-            "firstname",
-            "lastname",
-            "address",
-            "telephone",
-        )
+        fields = ("renter_id", "firstname", "lastname", "address", "telephone", "date")
 
 
 class PriceSerializer(serializers.ModelSerializer):
